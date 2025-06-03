@@ -50,8 +50,24 @@ function initEvents() {
     $input.addEventListener('keyup', onKeyUp);
 }
 
-function onKeyDown() {
+function onKeyDown(event) {
+    $currentWord = $paragraph.querySelector('x-word.active')
+    $currentLetter = $currentWord.querySelector('x-letter.active')
+    const { key } = event;
+    if(key === ' ') {
+        event.preventDefault();
 
+        const $nextWord = $currentWord.nextElementSibling;
+        const $nextLetter = $nextWord.querySelector("x-letter");
+        
+        $currentLetter.classList.remove('active');
+        $currentWord.classList.remove('active');
+     
+        $nextWord.classList.add('active');
+        $nextLetter.classList.add('active');
+
+        $input.value = '';
+    }
 }
 
 function onKeyUp() {
@@ -75,4 +91,12 @@ function onKeyUp() {
       $letter.classList.add(letterClass)
     });
 
+    $currentLetter.classList.remove('active', 'is-last');
+    const inputLength = $input.value.length
+    const $nextActiveLetter = $allLetters[inputLength];
+    if($nextActiveLetter) {
+        $nextActiveLetter.classList.add('active');
+    } else {
+        $currentLetter.classList.add('active', 'is-last')
+    }
 }

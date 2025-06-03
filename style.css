@@ -59,6 +59,9 @@ x-letter {
         left: -65%;
         animation: 0.9s blink infinite ease-in-out;
     }
+    &.active.is-last::before {
+        left: 65%;
+    }
     &.correct {
         color: var(--green);
     }
