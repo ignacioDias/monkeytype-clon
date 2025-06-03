@@ -59,6 +59,12 @@ x-letter {
         left: -65%;
         animation: 0.9s blink infinite ease-in-out;
     }
+    &.correct {
+        color: var(--green);
+    }
+    &.incorrect {
+        color: var(--red);
+    }
 }
 
 @keyframes blink {

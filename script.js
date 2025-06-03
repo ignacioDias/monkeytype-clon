@@ -23,7 +23,7 @@ function initGame() {
                 .join('')
             }
         </x-word>`
-    }).join('')
+    }).join('');
 
     $firstWord = $paragraph.querySelector('x-word');
     $firstWord.classList.add('active');
@@ -35,9 +35,44 @@ function initGame() {
             clearInterval(intervalId);
             gameOver();
         }
-    }, 1000)
+    }, 1000);
 }
-function initEvents() {}
+
 function gameOver() {
     console.log("game over");
+}
+
+function initEvents() {
+    document.addEventListener('keydown', () => {
+        $input.focus();
+    })
+    $input.addEventListener('keydown', onKeyDown);
+    $input.addEventListener('keyup', onKeyUp);
+}
+
+function onKeyDown() {
+
+}
+
+function onKeyUp() {
+    // recuperamos los elementos actuals
+    const $currentWord = $paragraph.querySelector('x-word.active');
+    const $currentLetter = $currentWord.querySelector('x-letter.active');
+
+    const currentWord = $currentWord.innerText.trim();
+    $input.maxLength = currentWord.length;
+
+    const $allLetters = $currentWord.querySelectorAll('x-letter');
+
+    $allLetters.forEach($letter => $letter.classList.remove('correct', 'incorrect'));
+
+    $input.value.split('').forEach((char, index) => {
+      const $letter = $allLetters[index]
+      const letterToCheck = currentWord[index]
+
+      const isCorrect = char === letterToCheck
+      const letterClass = isCorrect ? 'correct' : 'incorrect'
+      $letter.classList.add(letterClass)
+    });
+
 }
